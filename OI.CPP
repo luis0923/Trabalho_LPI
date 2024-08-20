@@ -5,7 +5,7 @@
     class coisas_das_formas
     {
         protected:
-        int arestas, raio, area_base, area_lateral, altura, opcao;
+        int area, arestas, raio, area_base, area_lateral, altura, opcao, volume;
         const float pi = 3.14;
         
 
@@ -25,7 +25,7 @@
 
         virtual int calcular_area()
         {
-            int a, area;
+            int a;
 
             cout << "Quantas arestas possui o poligono? ";
             cin >> a;
@@ -37,7 +37,7 @@
         }
         virtual int calcular_volume()
         {
-            int a, volume;
+            int a;
 
             cout << "Quantas arestas possui o poligono? ";
             cin >> a;
@@ -118,17 +118,74 @@
         }
     };
 
+    class piramide : public coisas_das_formas
+    {
+        int calcular_area() override
+        {
+        //Será que eu tenho que calcular as areas da base e lateral?
+        }
+        int calcular_volume() override
+        {
+         //Mesma icógnita   
+        }
+    };
 
+
+    class paralelepipedo : public coisas_das_formas
+    {
+        int calcular_area() override
+        {
+            int aresta1, aresta2, aresta3;
+            cout << "Respectivamente, digite os valores da Aresta 1, 2 e 3: \n";
+
+            cin >> aresta1;
+            cin >> aresta2;
+            cin >> aresta3;
+
+            area = (2 * aresta1 * aresta2) + (2 * aresta1 * aresta3) + (2 * aresta3 * aresta2);
+
+
+            cout << area << "\n";
+            return area;
+            
+        }
+        int calcular_volume() override
+        {
+            int aresta1, aresta2, aresta3;
+            cout << "Respectivamente, digite os valores da Aresta 1, 2 e 3: \n";
+
+            cin >> aresta1;
+            cin >> aresta2;
+            cin >> aresta3;
+
+            volume = aresta1 * aresta2 * aresta3;
+
+            cout << volume << "\n";
+            return volume;      
+        }
+    };
+
+
+
+    
 
     int main()
     {
         cubo cube;
         esfera bola;
+        paralelepipedo para;
 
-        cube.calcular_area();
-        cube.calcular_volume();
-        bola.calcular_area();
-        bola.calcular_volume();
+        int (coisas_das_formas::*puteiro_area)() = &coisas_das_formas::calcular_area;
+        int (coisas_das_formas::*puteiro_volume)() = &coisas_das_formas::calcular_volume;
+
+        (cube.*puteiro_area)();
+        (cube.*puteiro_volume)();
+
+        (para.*puteiro_area)();
+        (para.*puteiro_volume)();        
+
+        (bola.*puteiro_area)();
+        (bola.*puteiro_volume)();
 
         return 0;
     }
